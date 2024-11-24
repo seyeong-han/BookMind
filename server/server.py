@@ -53,15 +53,16 @@ async def get_graph_response(text_response, client):
     Text to convert:
     {text_response}
 
-    Expected format:
+    Expected format example (return only the JSON object, no additional text):
     {{
         "nodes": [
-            {{"id": "id1", "name": "Character Name", "val": 10}},
+            {{"id": id1, "name": "Character Name", "val": 10}}
         ],
         "links": [
-            {{"source": "id1", "target": "id2"}}
+            {{"source": id1, "target": "id2"}}
         ]
     }}
+    id1 and id2 are example variables and you should not generate those exact values.
     """
 
     # Get graph structure from LlamaStack
@@ -79,6 +80,7 @@ def jsonify_graph_response(response):
     """Extract and parse JSON content from graph response."""
     try:
         content = response.completion_message.content
+        print("content: ", content)
         # Find indices of first { and last }
         start_idx = content.find('{')
         end_idx = content.rfind('}')
@@ -135,6 +137,8 @@ async def process_book(book_title):
         f.write(text_response)
 
     graph_response = await get_graph_response(text_response, client)
+
+    print("graph_response: ", graph_response)
 
     graph_data = ""
     try:

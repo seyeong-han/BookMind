@@ -4,14 +4,14 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import Home from "./pages/homePage";
-import SearchPage from "./pages/bookPage/components/SearchPage";
+import AISearch from "./pages/bookPage/components/AISearch";
 
 const AppRouter = function () {
   return (
     <>
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/search" element={<SearchPage />} />
+        <Route exact path="/search" element={<AISearch />} />
       </Routes>
     </>
   );

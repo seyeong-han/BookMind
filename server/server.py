@@ -53,15 +53,16 @@ async def get_graph_response(text_response, client):
     Text to convert:
     {text_response}
 
-    Expected format:
+    Expected format example (return only the JSON object, no additional text):
     {{
         "nodes": [
-            {{"id": "id1", "name": "Character Name", "val": 10}},
+            {{"id": id1, "name": "Character Name", "val": 10}}
         ],
         "links": [
-            {{"source": "id1", "target": "id2"}}
+            {{"source": id1, "target": "id2"}}
         ]
     }}
+    id1 and id2 are example variables and you should not generate those exact values.
     """
 
     # Get graph structure from LlamaStack

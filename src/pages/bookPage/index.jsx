@@ -83,18 +83,82 @@ export default function BookPage() {
 
     setIsLoading(true);
     try {
-      const response = await initializeMemory(searchTerm);
+      // Initialize memory and fetch book data in parallel
+      const [memoryResponse, bookInfo] = await Promise.all([
+        initializeMemory(searchTerm),
+        fetchBookData(searchTerm),
+      ]);
+
       setBookData({
-        title: searchTerm,
-        subtitle: "Explore character relationships",
-        posterUrl: "/placeholder.svg?height=300&width=200",
+        title: bookInfo.title,
+        subtitle: bookInfo.summary,
+        posterUrl: bookInfo.coverUrl,
+        author: bookInfo.author,
+        publishedDate: bookInfo.publishedDate,
+        pageCount: bookInfo.pageCount,
       });
+
+      setGraphData(memoryResponse);
       setSearchComplete(true);
+      setMessage("Book data loaded successfully!");
     } catch (error) {
       setError(error.message);
       console.error("Search error:", error);
+      setMessage("Error loading book data. Please try again.");
     } finally {
       setIsLoading(false);
+    }
+  };
+  // Add new function to fetch book cover
+  const fetchBookData = async (bookTitle) => {
+    try {
+      const response = await axios.get(
+        `https://www.googleapis.com/books/v1/volumes`,
+        {
+          params: {
+            q: bookTitle,
+            key: process.env.REACT_APP_GOOGLE_BOOKS_API_KEY,
+          },
+        }
+      );
+
+      if (response.data.items && response.data.items[0]) {
+        const volumeInfo = response.data.items[0].volumeInfo;
+        const imageLinks = volumeInfo.imageLinks || {};
+
+        return {
+          coverUrl:
+            imageLinks.extraLarge ||
+            imageLinks.large ||
+            imageLinks.medium ||
+            imageLinks.thumbnail ||
+            "/placeholder.jpg",
+          summary: volumeInfo.description || "No summary available",
+          title: volumeInfo.title,
+          author: volumeInfo.authors?.[0] || "Unknown Author",
+          publishedDate: volumeInfo.publishedDate,
+          pageCount: volumeInfo.pageCount,
+        };
+      }
+
+      return {
+        coverUrl: "/placeholder.jpg",
+        summary: "No summary available",
+        title: bookTitle,
+        author: "Unknown Author",
+        publishedDate: "",
+        pageCount: 0,
+      };
+    } catch (error) {
+      console.error("Error fetching book data:", error);
+      return {
+        coverUrl: "/placeholder.jpg",
+        summary: "Failed to load book information",
+        title: bookTitle,
+        author: "Unknown Author",
+        publishedDate: "",
+        pageCount: 0,
+      };
     }
   };
 

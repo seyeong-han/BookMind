@@ -4,14 +4,14 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import Home from "./pages/homePage";
-import BookPage from "./pages/bookPage"
+import SearchPage from "./pages/bookPage/components/SearchPage";
 
 const AppRouter = function () {
   return (
     <>
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/book" element={<BookPage />} />
+        <Route exact path="/search" element={<SearchPage />} />
       </Routes>
     </>
   );

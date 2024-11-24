@@ -1,6 +1,7 @@
 import os
 import json
 import asyncio
+import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from llama_stack_client import LlamaStackClient
@@ -92,7 +93,7 @@ def jsonify_graph_response(response):
         return json.loads(json_str)
 
     except Exception as e:
-        print(f"Error parsing graph response: {e}")
+        logging.error(f"Error parsing graph response: {e}")
         return None
 
 
@@ -101,8 +102,6 @@ async def process_book(book_title):
     Process the book title, query LlamaStack for characters and relationships,
     and initialize memory.
     """
-    print(f"Processing book: {book_title}")
-    print(f"LLAMA_STACK_PORT={os.environ['LLAMA_STACK_PORT']}")
     client = LlamaStackClient(base_url=f"http://localhost:{os.environ['LLAMA_STACK_PORT']}")
     agent_config = AgentConfig(
         model=os.environ["INFERENCE_MODEL"],
@@ -117,7 +116,7 @@ async def process_book(book_title):
     session_id = agent.create_session(f"{book_title}-session")
     active_sessions["agent"] = agent
     active_sessions["session_id"] = session_id
-    print(f"Created session_id={session_id} for book: {book_title}")
+    logging.info(f"Created session_id={session_id} for book: {book_title}")
 
     # Query LlamaStack for characters and relationships
     prompt = f"Who are the characters in the book '{book_title}', and what are their relationships?"
@@ -137,16 +136,12 @@ async def process_book(book_title):
 
     graph_response = await get_graph_response(text_response, client)
 
-    print("----------------------------")
-    print("Graph response:", graph_response.completion_message.content)
-
     graph_data = ""
     try:
         graph_data = jsonify_graph_response(graph_response)
-        # graph_data = json.loads(graph_response.completion_message.content)
-        print("Graph data generated:", json.dumps(graph_data, indent=2))
+        logging.info("Graph data generated:", json.dumps(graph_data, indent=2))
     except json.JSONDecodeError as e:
-        print(f"Error parsing graph response: {e}")
+        logging.error(f"Error parsing graph response: {e}")
 
     # Push to memory agent (optional if further memory setup is needed)
     memory_prompt = "Save this knowledge about the book into memory for future questions."
@@ -265,11 +260,7 @@ async def query_llama_stack(prompt):
     # Process response logs
     result = []
     async for log in async_generator_wrapper(EventLogger().log(response)):
-        print("Log:", log)
         result.append(str(log))
-        # log.print()
-
-    print("Result:", result)
 
     inference_start_idx = result.index("inference> ")
     inference_logs = result[inference_start_idx + 1:]

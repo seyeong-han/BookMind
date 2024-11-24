@@ -1,12 +1,7 @@
-'use client'
-
 import { useState } from 'react'
-// import { Input } from "@/components/ui/input"
-// import { Button } from "@/components/ui/button"
 import { Scan } from 'lucide-react'
 import StoryDetails from './StoryDetails'
 
-// Mock data for search results
 const mockData = [
   { 
     id: 1, 
@@ -45,62 +40,71 @@ const mockData = [
 ]
 
 export default function SearchPage() {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [searchResults, setSearchResults] = useState([])
-  const [selectedStory, setSelectedStory] = useState(null)
-
-  const handleSearch = (e) => {
-    e.preventDefault()
-    const filteredResults = mockData.filter(item =>
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.type.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    setSearchResults(filteredResults)
-    setSelectedStory(null)
-  }
-
-  return (
-    <div>
-      <form onSubmit={handleSearch} className="mb-4">
-        <div className="flex gap-2 items-center">
-          <div className="relative flex-grow">
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [selectedStory, setSelectedStory] = useState(null);
+  
+    const handleSearch = (e) => {
+      e.preventDefault();
+      const filteredResults = mockData.filter((item) =>
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.type.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setSearchResults(filteredResults);
+      setSelectedStory(null);
+    };
+  
+    return (
+      <div className="p-4 max-w-screen-lg mx-auto">
+        <form onSubmit={handleSearch} className="mb-6">
+          <div className="flex items-center gap-2">
+            {/* Input Field */}
             <input
               type="text"
               placeholder="Search for a book or movie"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pr-10"
+              className="flex-grow py-2 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-lg"
             />
+  
+            {/* Scan Icon */}
             <button
               type="button"
-              variant="ghost"
-              size="icon"
-              className="absolute right-0 top-0 h-full"
+              className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
               aria-label="Scan"
             >
-              <Scan className="h-4 w-4" />
+              <Scan className="h-6 w-6 text-gray-600" />
+            </button>
+  
+            {/* Search Button */}
+            <button
+              type="submit"
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            >
+              Search
             </button>
           </div>
-          <button type="submit">Search</button>
-        </div>
-      </form>
-
-      {searchResults.length > 0 && !selectedStory && (
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Search Results</h2>
-          <ul className="space-y-2">
-            {searchResults.map((item) => (
-              <li key={item.id} className="border p-2 rounded cursor-pointer hover:bg-gray-100" onClick={() => setSelectedStory(item)}>
-                <h3 className="font-medium">{item.title}</h3>
-                <p className="text-sm text-gray-600">{item.type}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {selectedStory && <StoryDetails story={selectedStory} />}
-    </div>
-  )
-}
-
+        </form>
+  
+        {searchResults.length > 0 && !selectedStory && (
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Search Results</h2>
+            <ul className="space-y-4">
+              {searchResults.map((item) => (
+                <li
+                  key={item.id}
+                  className="border p-4 rounded-lg cursor-pointer hover:bg-gray-100 transition"
+                  onClick={() => setSelectedStory(item)}
+                >
+                  <h3 className="text-lg font-bold">{item.title}</h3>
+                  <p className="text-gray-600">{item.type}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+  
+        {selectedStory && <StoryDetails story={selectedStory} />}
+      </div>
+    );
+  }

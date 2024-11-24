@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { FaSearch, FaBook } from "react-icons/fa";
+import { FaSearch, FaBook, FaHome } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import AISearch from "./components/AISearch";
 import CharacterGraph from "./components/CharacterGraph";
 import axios from "axios";
@@ -21,8 +22,6 @@ export default function BookPage() {
         (link) => nodeIds.has(link.source) && nodeIds.has(link.target)
       );
 
-      console.log("validLinks:", validLinks);
-
       return {
         nodes: graphData.nodes,
         links: validLinks,
@@ -39,7 +38,6 @@ export default function BookPage() {
       const response = await axios.post("http://localhost:5001/initialize", {
         title: title,
       });
-      console.log("Memory initialized:", response.data);
 
       // Verify and set graph data
       const verifiedData = verificationGraphData(response.data);
@@ -141,6 +139,16 @@ export default function BookPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
+        {/* Home Button */}
+        <div className="flex justify-center mb-4">
+          <Link
+            to="/"
+            className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            <FaHome className="mr-2" />
+            Home
+          </Link>
+        </div>
         {/* Search Section */}
         <div className="max-w-md mx-auto mb-16">
           <h1 className="text-4xl font-extrabold text-center mb-8 text-gray-800 tracking-tight">

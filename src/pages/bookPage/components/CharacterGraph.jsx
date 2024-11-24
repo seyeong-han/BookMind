@@ -6,7 +6,6 @@ export default function CharacterGraph({ graphData }) {
   const [dimensions, setDimensions] = useState({ width: 300, height: 300 });
 
   useEffect(() => {
-    console.log("Graph data:", graphData);
     const updateDimensions = () => {
       if (containerRef.current) {
         setDimensions({

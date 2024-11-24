@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaSearch, FaBook, FaSpinner } from "react-icons/fa";
+import { FaSearch, FaBook } from "react-icons/fa";
 import AISearch from "./components/AISearch";
 import CharacterGraph from "./components/CharacterGraph";
 import axios from "axios";
@@ -8,13 +7,9 @@ import axios from "axios";
 export default function BookPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState("");
   const [graphData, setGraphData] = useState(null);
   const [bookData, setBookData] = useState(null);
-  const [error, setError] = useState(null);
   const [searchComplete, setSearchComplete] = useState(false);
-
-  const navigate = useNavigate();
 
   const verificationGraphData = (graphData) => {
     try {
@@ -50,34 +45,18 @@ export default function BookPage() {
       const verifiedData = verificationGraphData(response.data);
       setGraphData(verifiedData);
 
-      setMessage("Memory initialized successfully!");
       return verifiedData;
     } catch (error) {
       console.error("Initialization error:", error);
-      setMessage("Error initializing memory.");
       throw error;
     } finally {
       setIsLoading(false);
     }
   };
 
-  const queryMemory = async (query) => {
-    try {
-      const response = await axios.post("http://localhost:5001/query", {
-        query: query,
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Query error:", error);
-      setMessage("Error querying memory.");
-      throw error;
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!searchTerm.trim()) {
-      setMessage("Please enter a book or movie title");
       return;
     }
 
@@ -100,11 +79,8 @@ export default function BookPage() {
 
       setGraphData(memoryResponse);
       setSearchComplete(true);
-      setMessage("Book data loaded successfully!");
     } catch (error) {
-      setError(error.message);
       console.error("Search error:", error);
-      setMessage("Error loading book data. Please try again.");
     } finally {
       setIsLoading(false);
     }

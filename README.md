@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# BookMind
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+BookMind is a web application that allows users to explore character relationships and storylines in books using AI-powered visualizations. The application provides interactive mind maps, AI chatbots for deep questions, book summaries, and community contributions.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Interactive Mind Maps: Visualize relationships between characters and plot elements.
+- AI Chatbot: Ask deep questions about the book and get insightful answers.
+- Book Summaries: Get concise overviews of plots and themes.
+- Community Contributions: Add and refine maps with fellow book lovers.
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Node.js
+- Python 3.x
+- LlamaStack server running locally
+- Environment variables:
+  - LLAMA_STACK_PORT
+  - INFERENCE_MODEL
+  - REACT_APP_GOOGLE_BOOKS_API_KEY
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+### Backend Setup
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Install dependencies:
 
-### `npm run build`
+```
+pip install -r server/requirements.txt
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Run the server:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+python server/server.py
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Frontend Setup
 
-### `npm run eject`
+1. Install dependencies:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Run the application:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+npm start
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Usage
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Initialize Memory: Upload your book or choose from the library to initialize memory.
+2. AI Analysis: The AI analyzes the book and generates a mind map.
+3. Explore Insights: Explore relationships, themes, and Q&A insights.

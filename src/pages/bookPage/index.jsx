@@ -149,6 +149,7 @@ export default function BookPage() {
             Home
           </Link>
         </div>
+
         {/* Search Section */}
         <div className="max-w-md mx-auto mb-16">
           <h1 className="text-4xl font-extrabold text-center mb-8 text-gray-800 tracking-tight">

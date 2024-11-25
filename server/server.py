@@ -80,6 +80,7 @@ def jsonify_graph_response(response):
     """Extract and parse JSON content from graph response."""
     try:
         content = response.completion_message.content
+        print("content: ", content)
         # Find indices of first { and last }
         start_idx = content.find('{')
         end_idx = content.rfind('}')
@@ -136,6 +137,8 @@ async def process_book(book_title):
         f.write(text_response)
 
     graph_response = await get_graph_response(text_response, client)
+
+    print("graph_response: ", graph_response)
 
     graph_data = ""
     try:

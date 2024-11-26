@@ -1,5 +1,7 @@
 # BookMind
 
+[![thumbnail](https://github.com/user-attachments/assets/11c6f1f3-59db-4638-9b1a-68f1d25efec4)](https://youtu.be/DL4-DswxfEM)
+
 BookMind is a web application that allows users to explore character relationships and storylines in books using AI-powered visualizations. The application provides interactive mind maps, AI chatbots for deep questions, book summaries, and community contributions.
 
 ## Features
@@ -12,7 +14,7 @@ BookMind is a web application that allows users to explore character relationshi
 ## Prerequisites
 
 - Node.js
-- Python 3.x
+- Python >= 3.10
 - LlamaStack server running locally
 - Environment variables:
   - LLAMA_STACK_PORT

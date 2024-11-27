@@ -31,7 +31,20 @@ BookMind is a web application that allows users to explore character relationshi
 pip install -r server/requirements.txt
 ```
 
-2. Run the server:
+2. Install and run our forked `llama-stack` docker
+
+```
+git clone https://github.com/seyeong-han/llama-stack.git
+cd llama-stack
+pip install -e .
+
+# Get your API_KEY from https://cloud.sambanova.ai/apis
+export SSAMBANOVA_API_KEY=YOUR_API
+
+llama stack run --env SSAMBANOVA_API_KEY=f055ade5-9200-4eb5-88d7-9ddd264384bb --env INFERENCE_MODEL=meta-llama/Llama-3.1-8B-Instruct ssambanova
+```
+
+3. Run the server:
 
 ```
 python server/server.py
@@ -56,3 +69,9 @@ npm start
 1. Initialize Memory: Upload your book or choose from the library to initialize memory.
 2. AI Analysis: The AI analyzes the book and generates a mind map.
 3. Explore Insights: Explore relationships, themes, and Q&A insights.
+
+## What did we use Llama-stack in BookMind?
+
+1️⃣ Implemented SambaNova Systems Inference API: We contributed to the open-source Llama-stack by integrating the inference API and built a custom Docker container for the llama3.2-3B-instruct model.  
+2️⃣ RAG with FAISS: We leveraged FAISS in Llama-stack for Retrieval-Augmented Generation, enabling real-time responses to character relationship questions.  
+3️⃣ Multi-Hop Reasoning: Our system performs sequential inference—first extracting characters and relationships, then generating graphized mind map data in JSON for visual storytelling.

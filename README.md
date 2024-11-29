@@ -41,7 +41,7 @@ pip install -e .
 # Get your API_KEY from https://cloud.sambanova.ai/apis
 export SSAMBANOVA_API_KEY=YOUR_API
 
-llama stack run --env SSAMBANOVA_API_KEY=f055ade5-9200-4eb5-88d7-9ddd264384bb --env INFERENCE_MODEL=meta-llama/Llama-3.1-8B-Instruct ssambanova
+llama stack run --env INFERENCE_MODEL=meta-llama/Llama-3.1-8B-Instruct sambanova
 ```
 
 3. Run the server:
